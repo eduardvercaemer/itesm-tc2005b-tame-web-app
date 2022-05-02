@@ -4,11 +4,13 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import image from "../images/er_logo.jpeg";
+import Modal from "react-bootstrap/Modal";
 import { createUser, playerLogin } from "../api";
 
 const LoginForm = () => {
   const form = useRef();
   const navigate = useNavigate();
+  const [invalidLoginModal, setInvalidLoginModal] = React.useState(false);
 
   const register = async (e) => {
     e.preventDefault();
@@ -29,14 +31,11 @@ const LoginForm = () => {
       return;
     }
 
-    if (data.token) {
+    if (data.status === "SUCCESS" && data.token) {
       localStorage.setItem("token", data.token);
-      //sessionStorage.setItem('token', data.token);
-      //let fecha = new Date();
-      //fecha.setTime(fecha.getTime() + (3600*1000));
-      //document.cookie = `token=${data.token}; expires=${fecha.toUTCString()}`;
-
       navigate("/home");
+    } else if (data.status === "INVALID_LOGIN") {
+      setInvalidLoginModal(true);
     }
   };
 
@@ -82,6 +81,29 @@ const LoginForm = () => {
           Register
         </Button>
       </Form>
+
+      <Modal
+        show={invalidLoginModal}
+        onHide={() => setInvalidLoginModal(false)}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Invalid Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Please check your username and password and try again. If you still
+            have issues, please contact the administrator.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setInvalidLoginModal(false)}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
