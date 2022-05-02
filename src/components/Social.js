@@ -130,6 +130,7 @@ const Amigo = () => {
       </Row>
       <hr />
       <MyFollowing token={token} />
+      <hr />
       <MyFollowers token={token} />
     </Container>
   );
