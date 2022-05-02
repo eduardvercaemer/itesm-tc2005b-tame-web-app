@@ -89,7 +89,7 @@ const LoginForm = () => {
           Login
         </Button>
         <Button
-          className="register-button w-100"
+          className="register-button w-100 mt-2"
           onClick={register}
           variant="primary"
         >
