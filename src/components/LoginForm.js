@@ -12,11 +12,26 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [invalidLoginModal, setInvalidLoginModal] = React.useState(false);
 
+  // user creation result
+  const [creationResult, setCreationResult] = React.useState("");
+  const [creationModal, setCreationModal] = React.useState(false);
+
   const register = async (e) => {
     e.preventDefault();
     const username = form.current.elements["user"].value;
     const password = form.current.elements["password"].value;
     const data = await createUser({ username, password });
+    if (data.status === "CREATED") {
+      setCreationResult("User created successfully");
+      setCreationModal(true);
+    } else {
+      let reason = "User creation failed";
+      if (data.status === "NAME_TAKEN") {
+        reason = "Username taken";
+      }
+      setCreationResult(reason);
+      setCreationModal(true);
+    }
     console.debug(data.status);
   };
 
@@ -100,6 +115,17 @@ const LoginForm = () => {
             variant="secondary"
             onClick={() => setInvalidLoginModal(false)}
           >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={creationModal} onHide={() => setCreationModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>{creationResult}</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setCreationModal(false)}>
             Close
           </Button>
         </Modal.Footer>
