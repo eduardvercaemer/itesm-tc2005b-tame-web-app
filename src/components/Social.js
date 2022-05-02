@@ -1,7 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Button, Form } from "react-bootstrap";
+import { Container, Button, Form, ListGroup } from "react-bootstrap";
 import { followPlayer, getFollowedPlayers, getFollowers } from "../api";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+const UserList = ({ users }) => {
+  return (
+    <Container>
+      <ListGroup>
+        {users.map((user) => (
+          <ListGroup.Item key={user}>
+            <Button variant="link" as={Link} to={`/home/user/${user}`}>
+              {user}
+            </Button>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+    </Container>
+  );
+};
 
 const AddFollow = ({ token }) => {
   const form = useRef();
@@ -54,8 +71,7 @@ const MyFollowing = ({ token }) => {
       <h1>following</h1>
       {following === "LOADING" && <p>Loading...</p>}
       {following === "ERROR" && <p>Error</p>}
-      {typeof following === "object" &&
-        following.map((player) => <p key={player}>{player}</p>)}
+      {typeof following === "object" && <UserList users={following} />}
     </Container>
   );
 };
@@ -83,8 +99,7 @@ const MyFollowers = ({ token }) => {
       <h1>followers</h1>
       {followers === "LOADING" && <p>Loading...</p>}
       {followers === "ERROR" && <p>Error</p>}
-      {typeof followers === "object" &&
-        followers.map((player) => <p key={player}>{player}</p>)}
+      {typeof followers === "object" && <UserList users={followers} />}
     </Container>
   );
 };

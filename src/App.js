@@ -8,6 +8,7 @@ import Profile from './components/Profile';
 import Home from './components/Home';
 import ProtectedRoute from './components/ProtectedRoute';
 
+// user is a dnyamic route with a username segment
 const App = () => {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ const App = () => {
           <Route index element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
           <Route path='profile' element={<Profile/>}></Route>
           <Route path='social' element={<Social/>}></Route>
+          <Route path="user/:username" element={<Profile/>}></Route> 
         </Route>
       </Routes>
     </BrowserRouter>
