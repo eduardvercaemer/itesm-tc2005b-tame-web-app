@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Container, Button, Form, ListGroup } from "react-bootstrap";
+import { Row, Col, Container, Button, Form, ListGroup } from "react-bootstrap";
 import { followPlayer, getFollowedPlayers, getFollowers } from "../api";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -36,14 +36,24 @@ const AddFollow = ({ token }) => {
   };
 
   return (
-    <Form className="form-inline" ref={form}>
-      <Form.Group className="inline">
-        <Form.Label>username</Form.Label>
-        <Form.Control name="user" />
-      </Form.Group>
-      <Button variant="primary" onClick={follow}>
-        Follow
-      </Button>
+    <Form className="mt-3" ref={form}>
+      <Container>
+        <Row>
+          <Col xs={10}>
+            <Form.Control
+              type="text"
+              name="user"
+              placeholder="Username"
+              className="mx-auto"
+            />
+          </Col>
+          <Col xs={2}>
+            <Button variant="primary" onClick={follow}>
+              Follow
+            </Button>
+          </Col>
+        </Row>
+      </Container>
     </Form>
   );
 };
@@ -113,7 +123,12 @@ const Amigo = () => {
 
   return (
     <Container>
-      <AddFollow token={token} />
+      <Row>
+        <Col md={8} className="mx-auto">
+          <AddFollow token={token} />
+        </Col>
+      </Row>
+      <hr />
       <MyFollowing token={token} />
       <MyFollowers token={token} />
     </Container>
