@@ -1,0 +1,34 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+body {
+  display: grid;
+  background: #fefefe;
+  min-height: 100vh;
+}
+
+#sign-in-form{
+  max-width: 300px;
+}
+
+#main-container{
+  place-items: center center;
+}
+
+.login-logo{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.login-button{
+  background-color:rgb(240, 234, 234);
+  color: black;
+  border:none;
+}
+
+.login-button:hover{
+  background-color:black;
+  color:rgb(240, 234, 234);
+  border:none;
+}
