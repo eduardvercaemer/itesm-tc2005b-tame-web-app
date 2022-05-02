@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import { getFollowedPlayers } from "../api";
+import { getFollowedPlayers, getFollowers } from "../api";
 import { Navigate } from "react-router-dom";
 
 const MyFollowing = ({ token }) => {
@@ -32,6 +32,35 @@ const MyFollowing = ({ token }) => {
   );
 };
 
+const MyFollowers = ({ token }) => {
+  const [followers, setFollowers] = useState("LOADING");
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = getFollowers({ token });
+      if (data.error) {
+        console.error(data.error);
+        setFollowers("ERROR");
+        return;
+      }
+
+      setFollowers(data.data);
+    }
+
+    fetchData();
+  }, []);
+
+  return (
+    <Container>
+      <h1>followers</h1>
+      {followers === "LOADING" && <p>Loading...</p>}
+      {followers === "ERROR" && <p>Error</p>}
+      {typeof followers === "object" &&
+        followers.map((player) => <p key={player}>{player}</p>)}
+    </Container>
+  );
+};
+
 const Amigo = () => {
   const token = localStorage.getItem("token");
 
@@ -42,6 +71,7 @@ const Amigo = () => {
   return (
     <Container>
       <MyFollowing token={token} />
+      <MyFollowers token={token} />
     </Container>
   );
 };
