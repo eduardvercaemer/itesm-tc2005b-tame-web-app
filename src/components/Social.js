@@ -65,7 +65,7 @@ const MyFollowers = ({ token }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = getFollowers({ token });
+      const data = await getFollowers({ token });
       if (data.error) {
         console.error(data.error);
         setFollowers("ERROR");
