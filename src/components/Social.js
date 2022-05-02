@@ -1,7 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
-import { getFollowedPlayers, getFollowers } from "../api";
-import { Navigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Container, Button, Form } from "react-bootstrap";
+import { followPlayer, getFollowedPlayers, getFollowers } from "../api";
+import { Navigate, useNavigate } from "react-router-dom";
+
+const AddFollow = ({ token }) => {
+  const form = useRef();
+
+  const follow = async (ev) => {
+    ev.preventDefault();
+    const username = form.current.elements["user"].value;
+    const data = await followPlayer({ token, username });
+    if (data.status === "SUCCESS") {
+      console.log("Followed");
+    } else {
+      console.error(data.error);
+      alert("Error");
+    }
+  };
+
+  return (
+    <Form className="form-inline" ref={form}>
+      <Form.Group className="inline">
+        <Form.Label>username</Form.Label>
+        <Form.Control name="user" />
+      </Form.Group>
+      <Button variant="primary" onClick={follow}>
+        Follow
+      </Button>
+    </Form>
+  );
+};
 
 const MyFollowing = ({ token }) => {
   const [following, setFollowing] = useState("LOADING");
@@ -70,6 +98,7 @@ const Amigo = () => {
 
   return (
     <Container>
+      <AddFollow token={token} />
       <MyFollowing token={token} />
       <MyFollowers token={token} />
     </Container>
