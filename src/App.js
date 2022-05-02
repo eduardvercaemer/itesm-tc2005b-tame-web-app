@@ -3,7 +3,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
 import Layout from './views/Layout';
-import Friends from './components/Friends';
+import Social from './components/Social';
 import Profile from './components/Profile';
 import Home from './components/Home';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -16,7 +16,7 @@ const App = () => {
         <Route path='/home' element={<Layout/>}>
           <Route index element={<ProtectedRoute><Home/></ProtectedRoute>}></Route>
           <Route path='profile' element={<Profile/>}></Route>
-          <Route path='friends' element={<Friends/>}></Route>
+          <Route path='social' element={<Social/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>
